@@ -1,11 +1,19 @@
 #pragma once
 
+#include <vector>
+
 enum comp //cho viec sap xep
 {
 	Greater = false,
 	Smaller = true
 };
 
+enum search
+{
+	equal,
+	greater,
+	smaller
+};
 
 namespace DSA
 {

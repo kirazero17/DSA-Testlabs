@@ -2,16 +2,18 @@
 
 #include <base.h>
 
-template <typename T, int N>
-int insSort(T (&a)[N])
+namespace Lab2
 {
-	for (int i = 1; i < N; i++)
+	template <typename T, int N>
+	void insSort(T (&a)[N])
 	{
-		for (int j = i; j > 0; j--)
+		for (int i = 1; i < N; i++)
 		{
-			if (a[j] < a[j-1])
-				DSA::swap(a[j], a[j-1]);
+			for (int j = i; j > 0; j--)
+			{
+				if (a[j] < a[j-1])
+					DSA::swap(a[j], a[j-1]);
+			}
 		}
 	}
-	return 0;
 }

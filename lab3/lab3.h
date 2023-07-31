@@ -1,3 +1,4 @@
 #pragma once
 
-int lab2();
+
+int lab3();
