@@ -21,7 +21,6 @@ namespace Lab3
 				this->Mssv = id;
 				this->Ten = ten;
 				this->DTB = tb;
-				id++;
 			}
 			
 			void show()
@@ -46,7 +45,7 @@ namespace Lab3
 			friend class List;
 		};
 
-		int sinhvien::id = 20520000;
+		int sinhvien::id = 20520001;
 		
 		class Node
 		{
@@ -54,7 +53,7 @@ namespace Lab3
 			sinhvien info;
 			Node* next;
 			
-			Node(std::string name = "", int avg = 0)
+			Node(std::string name = "", float avg = 0)
 			{
 				this->info = sinhvien(name, avg);
 				this->next = NULL;
@@ -65,10 +64,6 @@ namespace Lab3
 		{
 			Node* Head;
 			Node* Tail;
-			swap(Node* node1, Node* node2)
-			{
-				
-			}
 		public:
 			List()
 			{
@@ -77,17 +72,19 @@ namespace Lab3
 			}
 			bool push(std::string name = "", float avg = 0)
 			{
-				if (name == "" && name == " ")
+				if (name == "" || name == " ")
 					return false;
 				Node* newnode = new Node(name, avg);
 				if (this->Head == NULL)
 				{
 					this->Head = newnode;
 					this->Tail = this->Head;
+					sinhvien::id++;
 					return true;
 				}
 				newnode->next = this->Head;
 				this->Head = newnode;
+				sinhvien::id++;
 				return true;
 			}
 			bool find(std::string name)
@@ -140,9 +137,60 @@ namespace Lab3
 				if (check == false)
 					std::cout << "Khong co hoc sinh dap ung tieu chi tim kiem !" << std::endl;
 			}
-			void sort()
+			bool sort()
+			{
+				if (this->Head == NULL)
+					return false;
+				Node *p, *min = this->Head, *q = this->Head, *x;
+				bool minishead = false;
+				while (min->next != this->Tail)
+				{
+					minishead = false;
+					if (min == this->Head)
+						minishead = true;
+					
+					p = min;
+					while (p != this->Tail)
+					{
+						if (p->next->info.DTB < min->info.DTB)
+						{
+							//swap p->next with min
+							x = min->next;
+							min->next = p->next->next;
+							p->next->next = x;
+							if (minishead)
+							{
+								q = p->next;
+								p->next = min;
+								min = q;
+								this->Head = min;
+							}
+							else
+							{
+								q->next = p->next;
+								p->next = min;
+								min = q->next;
+							}
+						}
+						p = p->next;
+					}
+					q = min;
+					min = min->next;
+				}
+				if (this->Tail->info.DTB < min->info.DTB)
+				{
+					this->Tail->next = min;
+					min->next = NULL;
+					q->next = this->Tail;
+					this->Tail = min;
+				}
+				return true;
+			}
+			void PrintAll()
 			{
 				Node* n = this->Head;
+				while (n != NULL)
+					n->info.show();
 			}
 		};
 	}

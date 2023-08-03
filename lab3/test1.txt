@@ -1,0 +1,16 @@
+Long
+8.7
+Nam
+7.9
+Hung
+9.0
+Thanh
+6.0
+Thao
+8.9
+Huy
+9.6
+Khanh
+8.0
+ 
+6
