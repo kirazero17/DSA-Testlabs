@@ -141,48 +141,22 @@ namespace Lab3
 			{
 				if (this->Head == NULL)
 					return false;
-				Node *p, *min = this->Head, *q = this->Head, *x;
-				bool minishead = false;
-				while (min->next != this->Tail)
+				Node *p, *min = this->Head;
+				sinhvien s;
+				while (min != this->Tail)
 				{
-					minishead = false;
-					if (min == this->Head)
-						minishead = true;
-					
 					p = min;
-					while (p != this->Tail)
+					while (p != NULL)
 					{
-						if (p->next->info.DTB < min->info.DTB)
+						if (p->info.DTB < min->info.DTB)
 						{
-							//swap p->next with min
-							x = min->next;
-							min->next = p->next->next;
-							p->next->next = x;
-							if (minishead)
-							{
-								q = p->next;
-								p->next = min;
-								min = q;
-								this->Head = min;
-							}
-							else
-							{
-								q->next = p->next;
-								p->next = min;
-								min = q->next;
-							}
+							s = p->info;
+							p->info = min->info;
+							min->info = s;
 						}
 						p = p->next;
 					}
-					q = min;
 					min = min->next;
-				}
-				if (this->Tail->info.DTB < min->info.DTB)
-				{
-					this->Tail->next = min;
-					min->next = NULL;
-					q->next = this->Tail;
-					this->Tail = min;
 				}
 				return true;
 			}
@@ -190,7 +164,10 @@ namespace Lab3
 			{
 				Node* n = this->Head;
 				while (n != NULL)
+				{
 					n->info.show();
+					n = n->next;
+				}
 			}
 		};
 	}
