@@ -70,6 +70,18 @@ namespace Lab3
 				this->Head = NULL;
 				this->Tail = NULL;
 			}
+			
+			~List()
+			{
+				Node *p = this->Head;
+				while (p != NULL)
+				{
+					Node* q = p;
+					p = p->next;
+					delete(q);
+				}
+			}
+			
 			bool push(std::string name = "", float avg = 0)
 			{
 				if (name == "" || name == " ")

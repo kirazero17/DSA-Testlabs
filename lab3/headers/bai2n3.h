@@ -3,7 +3,7 @@
 
 namespace Lab3
 {
-	namespace Bai2
+	namespace Bai2n3
 	{
 		class Node
 		{
@@ -28,16 +28,43 @@ namespace Lab3
 				this->Head = NULL;
 				this->Tail = NULL;
 			}
+			
+			~List()
+			{
+				Node *p = this->Head;
+				while (p != NULL)
+				{
+					Node* q = p;
+					p = p->next;
+					delete(q);
+				}
+			}
+			
+			void PrintAll()
+			{
+				Node* n = this->Head;
+				while (n != NULL)
+				{
+					std::cout << n->value << "  ";
+					n = n->next;
+				}
+				std::cout << std::endl;
+			}
+			
+			//Bai 2
 			bool add(int value = 0)
 			{
 				Node* newnode = new Node(value);
-				Node *p = Head, *q = Head->next;
+				
+				//tao node dau tien
 				if (this->Head == NULL)
 				{
 					this->Head = newnode;
 					this->Tail = this->Head;
 					return true;
 				}
+				
+				//neu chi co 1 node, chi co the them vao dau hoac duoi
 				if (newnode->value <= Head->value)
 				{
 					newnode->next = Head;
@@ -51,7 +78,9 @@ namespace Lab3
 					return true;
 				}
 				
-				while (q != Tail)
+				//chi co the toi doan nay neu mang da co it nhat 2 phan tu (p = head va q = tail)
+				Node *p = Head, *q = Head->next; // khong phai lo p va q = NULL
+				do
 				{
 					if (newnode->value <= q->value)
 					{
@@ -62,6 +91,9 @@ namespace Lab3
 					p = p->next;
 					q = q->next;
 				}
+				while (q != Tail);
+				
+				//truong hop du phong - khong the them phan tu (khong nen xay ra !)
 				return false;
 			}
 			bool sort()
@@ -85,15 +117,28 @@ namespace Lab3
 				return true;
 			}
 			
-			void PrintAll()
+			//Bai 3
+			bool Reverse()
 			{
-				Node* n = this->Head;
-				while (n != NULL)
+				if (this->Head == NULL)
+					return false; //khong sap xep danh sach rong
+
+				Node *p = this->Head, *q = p->next, *x = q->next;
+				while (x != NULL)
 				{
-					std::cout << n->value << "  ";
-					n = n->next;
+					q->next = p;
+					p = q;
+					q = x;
+					x = x->next;
 				}
-				std::cout << std::endl;
+				if (q != NULL) // q = NULL chi xay ra khi danh sach co 1 phan tu duy nhat
+				{
+					q->next = p;
+					this->Tail = this->Head;
+					this->Tail->next = NULL;
+					this->Head = q;
+				}
+				return true;
 			}
 		};
 	}
